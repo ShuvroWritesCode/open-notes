@@ -18,10 +18,10 @@ open-note/
 
 ## Features
 
-- No unnecessary features. Just a blank canvas to write notes.  
-- Highlight text and press `Tab + Enter` to get basic AI-generated suggestions. Don’t expect miracles — it’s just a basic integration.  
-- Save notes as text files on your device. Nothing fancy, just classic .txt.  
-- Meetings, study notes, doodling, or whatever. It’s not revolutionary, but it works.
+- Not many features. Just a blank canvas to write notes in limegreen font
+- Select text and press `Tab + Enter` to send it as a prompt to AI
+- Download note as text file on your device. Nothing fancy, just classic `.txt`
+- Meetings, study notes, doodling, or whatever, it works to take notes quickly
 
 ## Setup Instructions
 
@@ -32,9 +32,9 @@ open-note/
    OPENROUTER_MODEL=your_preferred_model
    ```
 3. Deploy:
-   - Push to GitHub
+   - Push to GitHub repo
    - Connect your GitHub repository to Vercel
-   - Add the environment variables in the Vercel dashboard under Settings → Environment Variables.
+   - Add the environment variables in the Vercel dashboard under **Settings** → **Environment Variables**.
 
 ## Contributing
    - Found a bug? Open an **issue**.
@@ -43,7 +43,7 @@ open-note/
 
 ## License
 
-This project is under MIT license. Use it, fork it, break it.
+This project is under *MIT license*. Use it, fork it, break it.
 
 ## Acknowledgments
 

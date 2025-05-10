@@ -35,7 +35,7 @@
         });
         
         if (!r.ok) {
-            const errorData = await r.json().catch(() => ({ message: r.statusText }));
+            const errorData = await r.json().catch(() => ({ message: r.statusText || "Unknown error" }));
             console.error("API request failed:", errorData);
             throw new Error(`API request failed with status ${r.status}: ${errorData.message || 'Unknown error'}`);
         }

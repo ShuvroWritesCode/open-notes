@@ -1,6 +1,6 @@
 # Open Note
 
-A basic, functional, and AI-enabled note-taking app for the browser. No fluff, just straightforward digital notes with minimal distractions.
+A browser-based, minimalist, hacker-inspired notepad with built-in AI assistance. Take notes in style with a sleek cyber interface and get AI-powered help with simple keyboard shortcuts all within your browser.
 
 ## Project Structure
 

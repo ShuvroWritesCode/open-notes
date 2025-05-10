@@ -1,6 +1,6 @@
 # Open Note
 
-A simple, sleek, and secure browser-based note-taking app with AI to make digital note-taking more efficient.
+A basic, functional, and AI-enabled note-taking app for the browser. No fluff, just straightforward digital notes with minimal distractions.
 
 ## Project Structure
 
@@ -18,11 +18,10 @@ open-note/
 
 ## Features
 
-- This is "just" what you need when you take notes online
-- Simple, distraction-free note-taking interface
-- AI assistance (select text and press Tab+Enter to ask AI)
-- Export notes as text files on your device
-- Use in Meetings, Study, Discussions, even for doodling
+- No unnecessary features. Just a blank canvas to write notes.  
+- Highlight text and press `Tab + Enter` to get basic AI-generated suggestions. Don’t expect miracles — it’s just a basic integration.  
+- Save notes as text files on your device. Nothing fancy, just classic .txt.  
+- Meetings, study notes, doodling, or whatever. It’s not revolutionary, but it works.
 
 ## Setup Instructions
 
@@ -32,19 +31,23 @@ open-note/
    OPENROUTER_API_KEY=your_api_key_here
    OPENROUTER_MODEL=your_preferred_model
    ```
-3. Deploy to Vercel:
+3. Deploy:
    - Push to GitHub
    - Connect your GitHub repository to Vercel
-   - Add the environment variables in Vercel dashboard (Project → Settings → Environment Variables)
+   - Add the environment variables in the Vercel dashboard under Settings → Environment Variables.
+
+## Contributing
+   - Found a bug? Open an **issue**.
+   - Have a feature idea? Submit a **pull request**.
+   - Keep it simple.
 
 ## License
 
-This project is under MIT license. 
-
-## Contributing
-
-Contributions are welcome! Feel free to submit a pull request or open an issue.
+This project is under MIT license. Use it, fork it, break it.
 
 ## Acknowledgments
 
 - [OpenRouter](https://openrouter.ai/) for providing AI API access
+
+---
+This is nothing revolutionary. This is a simple, browser-based, quick note-taking tool that does what I needed it to do. With AI everywhere, I added a basic AI assist so I don’t have to copy and paste my notes into ChatGPT for quick explanations. If that sounds like something you’d find useful too, it’s here for you.

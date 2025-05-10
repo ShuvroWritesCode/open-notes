@@ -2,11 +2,11 @@
   "name": "open-note",
   "version": "1.0.0",
   "description": "A simple, secure note-taking application with AI assistance",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "dev": "vercel dev",
-    "build": "vercel build",
-    "deploy": "vercel deploy --prod"
+    "dev": "node server.js",
+    "start": "node server.js",
+    "build": "echo 'No build step required'"
   },
   "keywords": [
     "note-taking",
@@ -16,9 +16,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "dotenv": "^16.5.0",
-    "express": "^5.1.0",
-    "node-fetch": "^2.7.0",
-    "vercel": "^32.7.2"
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "node-fetch": "^2.6.12",
+    "vercel": "^32.5.0"
   }
 }

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>0pen Note</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="config.js"></script>
+</head>
+<body>
+  <h1>Open Note</h1>
+  <div class="container">
+    <div id="note" contenteditable="true" placeholder="Take note or select text and press Tab+Enter to ask AI"></div>
+    <div class="button-container">
+      <button id="export" class="button">Get .txt</button>
+    </div>
+  </div>
+  <script>
+    const noteElement = document.getElementById('note');
+    let tabPressed = false;
+    let envVars = {
+      OPENROUTER_API_KEY: '',
+      OPENROUTER_MODEL: ''
+    };
+
+    // Load environment variables when the page loads
+    (async function() {
+      try {
+        envVars = await loadEnvVariables();
+        
+        // Check if required variables are available
+        if (!envVars.OPENROUTER_API_KEY || !envVars.OPENROUTER_MODEL) {
+          console.error("Missing required environment variables. AI functionality will not work.");
+          // Show a message in the note area
+          const missingEnvMsg = "⚠️ AI functionality is disabled: Missing API configuration in .env file.";
+          noteElement.innerHTML = `<div class="error-msg">${missingEnvMsg}</div>`;
+        } else {
+          console.log("Environment variables loaded:", { 
+            API_KEY: "***" + envVars.OPENROUTER_API_KEY.slice(-5), 
+            MODEL: envVars.OPENROUTER_MODEL 
+          });
+        }
+      } catch (error) {
+        console.error("Failed to load environment variables:", error);
+      }
+    })();
+
+    const callAI = async (prompt) => {
+      if (!prompt) return;
+      
+      // Check if API key and model are available
+      if (!envVars.OPENROUTER_API_KEY || !envVars.OPENROUTER_MODEL) {
+        noteElement.innerHTML += `<div class="error-msg"><span class="error-tag">[Error]</span> AI functionality is disabled: Missing API configuration in .env file.</div>`;
+        return;
+      }
+      
+      const thinkingMsgHTML = `<div class="thinking-msg"><span>[Thinking...]</span></div>`;
+      if (noteElement.innerHTML.endsWith('</div>')) {
+         noteElement.innerHTML += thinkingMsgHTML;
+      } else {
+         noteElement.innerHTML += `<br>` + thinkingMsgHTML;
+      }
+      noteElement.scrollTop = noteElement.scrollHeight;
+      try {
+        console.log("Sending request to OpenRouter API with prompt:", prompt);
+        const r = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${envVars.OPENROUTER_API_KEY}`,
+            "HTTP-Referer": window.location.href,
+            "X-Title": "Open Note",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            model: envVars.OPENROUTER_MODEL,
+            messages: [{ role: "user", content: prompt }]
+          })
+        });
+        
+        if (!r.ok) {
+            const errorData = await r.json().catch(() => ({ message: r.statusText }));
+            console.error("API request failed:", errorData);
+            throw new Error(`API request failed with status ${r.status}: ${errorData.message || 'Unknown error'}`);
+        }
+        
+        const j = await r.json();
+        console.log("API response:", j);
+        
+        // Extract response from the API result
+        const aiResponse = j.choices?.[0]?.message?.content || "No response from AI service.";
+        console.log("Extracted AI response:", aiResponse);
+
+        noteElement.innerHTML = noteElement.innerHTML.replace(thinkingMsgHTML,
+          `<div class="ai-response"><span class="ai-tag">[AI]</span> ${aiResponse.replace(/\n/g, '<br>')}</div>` +
+          `<div class="spacer"><br></div>`);
+
+      } catch (e) {
+        console.error("AI Error:", e);
+        noteElement.innerHTML = noteElement.innerHTML.replace(thinkingMsgHTML,
+          `<div class="error-msg"><span class="error-tag">[Error]</span> ${e.message}</div>` +
+          `<div class="spacer"><br></div>`);
+      }
+      noteElement.scrollTop = noteElement.scrollHeight;
+    };
+
+    noteElement.addEventListener('keydown', e => {
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        tabPressed = true;
+      } else if (e.key === 'Enter' && tabPressed) {
+        e.preventDefault();
+        const selection = window.getSelection().toString().trim();
+        if (selection) callAI(selection);
+        tabPressed = false;
+      }
+    });
+    
+    noteElement.addEventListener('keyup', e => {
+      if (e.key === 'Tab') tabPressed = false;
+    });
+
+    document.getElementById('export').onclick = () => {
+      const text = noteElement.innerText;
+      const blob = new Blob([text], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'Open-Note.txt';
+      a.click();
+    };
+    noteElement.focus();
+  </script>
+</body>
+</html>

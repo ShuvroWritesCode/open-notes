@@ -1,0 +1,81 @@
+body {
+  background: black;
+  color: limegreen;
+  font-family: monospace;
+}
+
+html {
+  background: black;
+}
+
+.container {
+  padding: 1rem;
+}
+
+#note {
+  height: 75vh;
+  background: black;
+  color: limegreen;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  padding: 0.5rem;
+  white-space: pre-wrap;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.button-container {
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  background: limegreen;
+  color: black;
+  border: none;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button + button {
+  margin-left: 1rem;
+}
+
+h1 {
+  font-size: 25px;
+  text-align: center;
+  padding: 5px 0;
+}
+
+.thinking-msg {
+  margin-top: 1em;
+}
+
+.thinking-msg span {
+  color: white;
+}
+
+.ai-response {
+  color: #00aeff;
+  margin-top: 1em;
+}
+
+.ai-tag {
+  color: violet;
+}
+
+.error-msg {
+  color: red;
+  margin-top: 1em;
+}
+
+.error-tag {
+  color: red;
+}
+
+.spacer {
+  color: limegreen;
+}

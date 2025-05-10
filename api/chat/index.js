@@ -1,3 +1,4 @@
+// /api/chat/index.js
 import fetch from 'node-fetch';
 
 export default async function handler(req, res) {
@@ -14,7 +15,18 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { prompt } = req.body;
+    // Handle both req.body and req.json() for different Vercel environments
+    let prompt;
+    if (req.body) {
+      prompt = req.body.prompt;
+    } else {
+      try {
+        const body = await req.json();
+        prompt = body.prompt;
+      } catch (e) {
+        console.error("Error parsing request body:", e);
+      }
+    }
     
     if (!prompt) {
       return res.status(400).json({ message: "Missing prompt in request body" });

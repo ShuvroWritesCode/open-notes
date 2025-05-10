@@ -25,16 +25,6 @@ html {
   box-sizing: border-box;
 }
 
-#note::before {
-    content: "Welcome to Open Note 📝\n- Note taking app on browser with in-built AI assistant.\n- Ask questions, select the text and press ‘Tab + Enter’ to send it as prompt to AI.\n- To self-host and to use your own model as assistant, feel free to clone the Open Note repository on Github.\n- Github Link: https://github.com/ShuvroWritesCode/open-note";
-    color: rgba(255, 255, 255, 0.3); /* Subtle white text */
-    position: absolute;
-    top: 10px; /* Adjust positioning */
-    left: 10px; /* Adjust positioning */
-    white-space: pre-wrap; /* Preserve newlines */
-    pointer-events: none; /* Ensure it doesn't interfere with editing */
-}
-
 .button-container {
   text-align: center;
   margin-top: 0.5rem;

@@ -14,6 +14,7 @@
     <div id="note" contenteditable="true" placeholder="Take note or select text and press Tab+Enter to ask AI"></div>
     <div class="button-container">
       <button id="export" class="button">Get .txt</button>
+      <button id="askAI" class="button mobile-only">Ask AI</button>
     </div>
   </div>
   <script>
@@ -53,12 +54,35 @@
         noteElement.innerHTML = noteElement.innerHTML.replace(thinkingMsgHTML,
           `<div class="ai-response"><span class="ai-tag">[AI]</span> ${aiResponse.replace(/\n/g, '<br>')}</div>` +
           `<div class="spacer"><br></div>`);
+        
+        // Set cursor at the end and ensure text color is limegreen for new input
+        setTimeout(() => {
+          // Create a range at the end of the content
+          const range = document.createRange();
+          const sel = window.getSelection();
+          
+          try {
+            // Try to move cursor to the end
+            range.selectNodeContents(noteElement);
+            range.collapse(false); // Collapse to end
+            sel.removeAllRanges();
+            sel.addRange(range);
+            
+            // Focus the element
+            noteElement.focus();
+          } catch (e) {
+            console.error("Error setting cursor position:", e);
+          }
+        }, 50);
 
       } catch (e) {
         console.error("AI Error:", e);
         noteElement.innerHTML = noteElement.innerHTML.replace(thinkingMsgHTML,
           `<div class="error-msg"><span class="error-tag">[Error]</span> ${e.message}</div>` +
           `<div class="spacer"><br></div>`);
+        
+        // Set focus after error message
+        setTimeout(() => noteElement.focus(), 50);
       }
       noteElement.scrollTop = noteElement.scrollHeight;
     };
@@ -77,6 +101,12 @@
     
     noteElement.addEventListener('keyup', e => {
       if (e.key === 'Tab') tabPressed = false;
+    });
+
+    // Add event listener for the Ask AI button (for mobile/tablet)
+    document.getElementById('askAI').addEventListener('click', () => {
+      const selection = window.getSelection().toString().trim();
+      if (selection) callAI(selection);
     });
 
     document.getElementById('export').onclick = () => {

@@ -95,6 +95,10 @@ h1 {
   color: limegreen;
 }
 
+.mobile-only {
+  display: none;
+}
+
 /* Responsive styles */
 @media screen and (max-width: 768px) {
   .container {
@@ -108,6 +112,17 @@ h1 {
   
   h1 {
     font-size: 22px;
+  }
+  
+  /* Show mobile-only elements */
+  .mobile-only {
+    display: inline-block;
+  }
+  
+  #askAI {
+    background-color: limegreen;
+    color: black;
+    margin-left: 0.5rem;
   }
 }
 

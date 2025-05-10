@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>0pen Note</title>
   <link rel="stylesheet" href="styles.css">
-  <script src="config.js"></script>
 </head>
 <body>
   <h1>Open Note</h1>
@@ -17,63 +16,22 @@
   <script>
     const noteElement = document.getElementById('note');
     let tabPressed = false;
-    let envVars = {
-      OPENROUTER_API_KEY: '',
-      OPENROUTER_MODEL: ''
-    };
-
-    // Load environment variables when the page loads
-    (async function() {
-      try {
-        envVars = await loadEnvVariables();
-        
-        // Check if required variables are available
-        if (!envVars.OPENROUTER_API_KEY || !envVars.OPENROUTER_MODEL) {
-          console.error("Missing required environment variables. AI functionality will not work.");
-          // Show a message in the note area
-          const missingEnvMsg = "⚠️ AI functionality is disabled: Missing API configuration in .env file.";
-          noteElement.innerHTML = `<div class="error-msg">${missingEnvMsg}</div>`;
-        } else {
-          console.log("Environment variables loaded:", { 
-            API_KEY: "***" + envVars.OPENROUTER_API_KEY.slice(-5), 
-            MODEL: envVars.OPENROUTER_MODEL 
-          });
-        }
-      } catch (error) {
-        console.error("Failed to load environment variables:", error);
-      }
-    })();
 
     const callAI = async (prompt) => {
       if (!prompt) return;
       
-      // Check if API key and model are available
-      if (!envVars.OPENROUTER_API_KEY || !envVars.OPENROUTER_MODEL) {
-        noteElement.innerHTML += `<div class="error-msg"><span class="error-tag">[Error]</span> AI functionality is disabled: Missing API configuration in .env file.</div>`;
-        return;
-      }
-      
       const thinkingMsgHTML = `<div class="thinking-msg"><span>[Thinking...]</span></div>`;
-      if (noteElement.innerHTML.endsWith('</div>')) {
-         noteElement.innerHTML += thinkingMsgHTML;
-      } else {
-         noteElement.innerHTML += `<br>` + thinkingMsgHTML;
-      }
+      noteElement.innerHTML += thinkingMsgHTML;
       noteElement.scrollTop = noteElement.scrollHeight;
+
       try {
-        console.log("Sending request to OpenRouter API with prompt:", prompt);
-        const r = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        console.log("Sending request to API with prompt:", prompt);
+        const r = await fetch("/api/chat", {
           method: "POST",
           headers: {
-            "Authorization": `Bearer ${envVars.OPENROUTER_API_KEY}`,
-            "HTTP-Referer": window.location.href,
-            "X-Title": "Open Note",
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({
-            model: envVars.OPENROUTER_MODEL,
-            messages: [{ role: "user", content: prompt }]
-          })
+          body: JSON.stringify({ prompt })
         });
         
         if (!r.ok) {

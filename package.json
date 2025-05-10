@@ -1,0 +1,21 @@
+{
+  "name": "open-note",
+  "version": "1.0.0",
+  "description": "A simple, secure note-taking application with AI assistance",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "vercel build",
+    "deploy": "vercel deploy --prod"
+  },
+  "keywords": [
+    "note-taking",
+    "ai",
+    "vercel"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "vercel": "^32.5.0"
+  }
+}

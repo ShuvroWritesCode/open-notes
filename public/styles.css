@@ -36,6 +36,20 @@ html {
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
+  caret-color: limegreen;
+}
+
+#note:not(.ai-response):not(.error-msg):not(.thinking-msg) {
+  color: limegreen;
+}
+
+#note > div:not(.ai-response):not(.error-msg):not(.thinking-msg):not(.spacer) {
+  color: limegreen;
+}
+
+#note::selection {
+  background-color: rgba(50, 205, 50, 0.3);
+  color: white;
 }
 
 .button-container {
@@ -95,6 +109,140 @@ h1 {
   color: limegreen;
 }
 
+/* Custom Alert Styling */
+.custom-alert {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.custom-alert.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.custom-alert-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #111;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 90%;
+  width: 400px;
+  box-shadow: 0 0 20px rgba(50, 205, 50, 0.2);
+}
+
+.custom-alert-content {
+  color: limegreen;
+  padding: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.custom-alert-button {
+  background-color: limegreen;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 25px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.custom-alert-button:hover {
+  background-color: #00cc00;
+  transform: translateY(-2px);
+}
+
+/* Share container and buttons */
+.share-container {
+  margin-top: 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.share-text {
+  color: limegreen;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.share-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.share-button {
+  background-color: #222;
+  border: 1px solid limegreen;
+  border-radius: 4px;
+  padding: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  width: 40px;
+  height: 40px;
+}
+
+.share-button:hover {
+  background-color: #333;
+  transform: translateY(-2px);
+}
+
+.share-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+#gmail svg {
+  fill: #EA4335;
+}
+
+#whatsapp svg {
+  fill: #25D366;
+}
+
+#copy-link svg {
+  fill: #ffffff;
+}
+
+#telegram svg {
+  fill: #0088cc;
+}
+
+#native-share svg {
+  fill: #00B2FF;
+}
+
+/* Mobile-only elements */
 .mobile-only {
   display: none;
 }

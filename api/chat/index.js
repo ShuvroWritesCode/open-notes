@@ -17,7 +17,7 @@ export default async function handler(req, res) {
   try {
     // Handle both req.body and req.json() for different Vercel environments
     let prompt;
-    if (req.body) {
+    if (req.body && req.body.prompt) {
       prompt = req.body.prompt;
     } else {
       try {

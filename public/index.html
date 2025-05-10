@@ -2,8 +2,10 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>0pen Note</title>
+  <title>Open Note</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
   <h1>Open Note</h1>
@@ -85,6 +87,10 @@
       a.click();
     };
     noteElement.focus();
+  </script>
+  <script type="module">
+    import { inject } from 'https://unpkg.com/@vercel/analytics@1.5.0/dist/index.js';
+    inject();
   </script>
 </body>
 </html>

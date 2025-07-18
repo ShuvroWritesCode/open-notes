@@ -71,6 +71,12 @@
       alertDiv.classList.add('show');
     }
 
+    // Escape HTML to avoid XSS when inserting AI output
+    const sanitize = (str) => str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
     const callAI = async (prompt) => {
       if (!prompt) return;
       
@@ -101,8 +107,9 @@
         const aiResponse = j.choices?.[0]?.message?.content || "No response from AI service.";
         console.log("Extracted AI response:", aiResponse);
 
+        const safeResponse = sanitize(aiResponse);
         noteElement.innerHTML = noteElement.innerHTML.replace(thinkingMsgHTML,
-          `<div class="ai-response"><span class="ai-tag">[AI]</span> ${aiResponse.replace(/\n/g, '<br>')}</div>` +
+          `<div class="ai-response"><span class="ai-tag">[AI]</span> ${safeResponse.replace(/\n/g, '<br>')}</div>` +
           `<div class="spacer"><br></div>`);
         
         // Set cursor at the end and ensure text color is limegreen for new input
@@ -237,15 +244,20 @@
       
       if (noteParam) {
         noteElement.innerHTML = decodeURIComponent(noteParam);
+      } else {
+        noteElement.innerText =
+          'Welcome to 0pen Note!\n\n' +
+          '- Select text and press Tab+Enter to ask AI.\n' +
+          '- Use the buttons below to share or download your note.';
       }
-      
+
       noteElement.focus();
     });
 
     noteElement.focus();
   </script>
   <script type="module">
-    import { inject } from 'https://unpkg.com/@vercel/analytics@1.5.0/dist/index.js';
+    import { inject } from 'https://unpkg.com/@vercel/analytics@1.5.0/dist/index.mjs';
     inject();
   </script>
 </body>

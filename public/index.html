@@ -14,7 +14,12 @@
     <div id="note" contenteditable="true" placeholder="Take note or select text and press Tab+Enter to ask AI"></div>
     <div class="controls-wrapper">
       <div class="button-container">
-        <button id="export" class="button">Get .txt</button>
+        <button id="export" class="button">Download File</button>
+        <select id="fileFormat">
+          <option value="txt">.txt</option>
+          <option value="md">.md</option>
+          <option value="pdf">.pdf</option>
+        </select>
         <button id="askAI" class="button mobile-only">Ask AI</button>
       </div>
       <div class="share-container">
@@ -168,10 +173,22 @@
 
     document.getElementById('export').onclick = () => {
       const text = noteElement.innerText;
-      const blob = new Blob([text], { type: 'text/plain' });
+      const format = document.getElementById('fileFormat').value;
+
+      if (format === 'pdf') {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        const lines = doc.splitTextToSize(text, 180);
+        doc.text(lines, 10, 10);
+        doc.save('Open-Note.pdf');
+        return;
+      }
+
+      const mime = format === 'md' ? 'text/markdown' : 'text/plain';
+      const blob = new Blob([text], { type: mime });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = 'Open-Note.txt';
+      a.download = `Open-Note.${format}`;
       a.click();
     };
 
@@ -256,6 +273,7 @@
 
     noteElement.focus();
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@3.0.1/dist/jspdf.umd.min.js"></script>
   <script type="module">
     import { inject } from 'https://unpkg.com/@vercel/analytics@1.5.0/dist/index.mjs';
     inject();

@@ -20,7 +20,9 @@ open-note/
 
 - Not many features. Just a blank canvas to write notes in limegreen font
 - Select text and press `Tab + Enter` to send it as a prompt to AI
-- Download note as text file on your device. Nothing fancy, just classic `.txt`
+- Write notes in plain text or Markdown.
+- Download notes as `.txt`, `.md`, or `.pdf` files.
+- Use the dropdown next to "Download File" to pick your desired format.
 - Meetings, study notes, doodling, or whatever, it works to take notes quickly
 
 ## Setup Instructions
